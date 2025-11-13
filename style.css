@@ -1345,10 +1345,14 @@ body.modal-open { overflow: hidden; }
 }
 
 /* Category slider (static variant): make items scrollable on small screens */
-.cat-slider.static .cs-track{ display:flex; gap:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; scroll-snap-type:x mandatory; padding:6px 4px; }
-.cat-slider.static .cs-item{ flex:0 0 200px; scroll-snap-align:start; }
-@media (max-width: 480px){
-	.cat-slider.static .cs-item{ flex-basis:170px; }
+/* Static Category section as a responsive grid (no slider) */
+.cat-slider.static .cs-track{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:16px; padding:6px 4px; overflow:visible; }
+.cat-slider.static .cs-item{ width:100%; height:100%; }
+@media (max-width: 900px){
+	.cat-slider.static .cs-track{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 520px){
+	.cat-slider.static .cs-track{ grid-template-columns: 1fr; }
 }
 
 /* Reveal utilities */
@@ -2298,6 +2302,25 @@ body.nav-open { overflow: hidden; }
 .checkout-close:hover{ background:rgba(0,0,0,.8); }
 /* Inline content inside the modal (we inject it via JS). Force it to scroll if needed. */
 .checkout-inline-content{ overflow:auto; -webkit-overflow-scrolling: touch; flex:1 1 auto; height:auto !important; max-height:100%; }
+
+/* Mobile-first refinements for Checkout overlay */
+@media (max-width: 540px){
+	.checkout-modal{ width:calc(100vw - 16px); max-height:calc(100vh - 16px); border-radius:14px; }
+	/* Reduce inner padding set inline */
+	.checkout-inline-content > div{ padding:16px 14px 14px !important; }
+	/* Reflow each cart row to avoid horizontal overflow */
+	.checkout-inline-content .co-row{ grid-template-columns:54px 1fr !important; grid-template-areas:"img info" "qty qty" "sub remove"; row-gap:8px; }
+	.checkout-inline-content .co-row > img{ grid-area:img; }
+	.checkout-inline-content .co-row .co-info{ grid-area:info; }
+	.checkout-inline-content .co-row .co-qty{ grid-area:qty; justify-self:start; }
+	.checkout-inline-content .co-row .co-sub{ grid-area:sub; justify-self:start; text-align:left; }
+	.checkout-inline-content .co-row .co-remove{ grid-area:remove; justify-self:end; }
+	/* Tighten quantity controls to fit */
+	.checkout-inline-content .co-qty button{ width:28px !important; height:28px !important; border-radius:8px; }
+	.checkout-inline-content .co-qty input{ width:48px !important; padding:6px 4px !important; }
+	/* Make action buttons full-width for thumb reach */
+	#inlineCheckoutForm .hero-btn{ width:100%; }
+}
 .cart-item {
 	display: flex;
 	align-items: center;
