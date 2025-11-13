@@ -178,7 +178,7 @@ body{margin:0;background:#fafafa;color:var(--text);font-family:var(--font)}
 .hero-flex{display:flex;align-items:center;gap:40px;}
 /* Theme: dark overrides (light is default) */
 /* Dark mode removed */
-.utility-bar{ position:sticky; top:0; z-index:650; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-bottom:1px solid rgba(124,58,237,0.12); backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.utility-bar{ position:sticky; top:0; z-index:2000; background:linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%); border-bottom:1px solid rgba(124,58,237,0.12); backdrop-filter:saturate(180%) blur(12px); -webkit-backdrop-filter:saturate(180%) blur(12px); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
 .utility-bar::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:2px; background:linear-gradient(90deg,transparent, var(--primary) 30%, var(--accent) 70%, transparent); opacity:.4; }
 .util-flex{ display:flex; align-items:center; justify-content:space-between; height:52px; gap:24px; }
 .util-left{ display:flex; align-items:center; gap:20px; color:#374151; font-weight:600; font-size:.88rem; }
@@ -207,7 +207,7 @@ body{margin:0;background:#fafafa;color:var(--text);font-family:var(--font)}
 .util-dd{ position: relative; }
 #loginBtn.util-btn{ background:linear-gradient(90deg,var(--primary),var(--accent)); color:#fff; border:0; border-radius:999px; padding:8px 18px; box-shadow:0 4px 16px rgba(124,58,237,.35); font-weight:700; }
 #loginBtn.util-btn:hover{ filter:brightness(1.06); transform:translateY(-2px); }
-.util-dd .dropdown-menu{ position: absolute; top: 100%; left: 0; min-width:180px; border:1px solid #eef2f7; box-shadow:0 14px 42px -8px rgba(15,23,42,.18),0 6px 18px -6px rgba(15,23,42,.1); border-radius:14px; padding:6px 0; margin-top: 4px; z-index: 1000; }
+.util-dd .dropdown-menu{ position: absolute; top: 100%; left: 0; min-width:180px; border:1px solid #eef2f7; box-shadow:0 14px 42px -8px rgba(15,23,42,.18),0 6px 18px -6px rgba(15,23,42,.1); border-radius:14px; padding:6px 0; margin-top: 4px; z-index: 2100; }
 .util-dd .dropdown-menu a{ padding:9px 16px; font-size:.75rem; font-weight:700; text-decoration:none; color:#374151; display:flex; align-items:center; gap:6px; position:relative; }
 .util-dd .dropdown-menu a:hover{ background:#f1f5f9; color:var(--primary); }
 /* Top promo bar */
