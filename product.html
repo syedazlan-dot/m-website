@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product - M-Mobiles</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="has-topbar product">
+  <!-- Top promo bar (same across pages) -->
+  <div class="market-bar" role="banner">
+    <div class="container market-flex">
+      <div class="market-left"><span class="leaf" aria-hidden="true"></span> <strong>M-Mobiles</strong></div>
+  <a class="market-cta" href="shop.html?layout=grid">Buy now</a>
+    </div>
+  </div>
+  <!-- Utility bar between top bar and nav -->
+  <div class="utility-bar" role="region" aria-label="Site utilities">
+    <div class="container util-flex">
+      <div class="util-left">
+        <span class="util-item">📣 <strong>7500k</strong> Followers</span>
+        <span class="util-sep"></span>
+        <span class="util-item phone-item">📞 +402 763 282 46</span>
+      </div>
+      <div class="util-right">
+        <button id="themeToggle" class="util-btn theme-toggle" aria-pressed="false" title="Toggle theme">🌙 Dark</button>
+        <div class="dropdown util-dd">
+          <button class="util-btn dropdown-toggle" id="langToggle" aria-expanded="false"><span class="current-language">English</span> <span class="caret">▾</span></button>
+          <div class="dropdown-menu" role="menu" aria-labelledby="langToggle">
+            <a role="menuitem" href="#" data-lang="English">English</a>
+            <a role="menuitem" href="#" data-lang="Urdu">Urdu</a>
+            <a role="menuitem" href="#" data-lang="Arabic">Arabic</a>
+            <a role="menuitem" href="#" data-lang="Spanish">Spanish</a>
+            <a role="menuitem" href="#" data-lang="French">French</a>
+            <a role="menuitem" href="#" data-lang="German">German</a>
+            <a role="menuitem" href="#" data-lang="Chinese">Chinese</a>
+            <a role="menuitem" href="#" data-lang="Japanese">Japanese</a>
+          </div>
+        </div>
+        <div class="dropdown util-dd">
+          <button class="util-btn dropdown-toggle" id="curToggle" aria-expanded="false"><span class="current-currency">$USD</span> <span class="caret">▾</span></button>
+          <div class="dropdown-menu" role="menu" aria-labelledby="curToggle">
+            <a role="menuitem" href="#" data-currency="USD">$USD</a>
+            <a role="menuitem" href="#" data-currency="EUR">€EUR</a>
+            <a role="menuitem" href="#" data-currency="GBP">£GBP</a>
+            <a role="menuitem" href="#" data-currency="PKR">₨PKR</a>
+            <a role="menuitem" href="#" data-currency="INR">₹INR</a>
+            <a role="menuitem" href="#" data-currency="JPY">¥JPY</a>
+            <a role="menuitem" href="#" data-currency="CNY">¥CNY</a>
+            <a role="menuitem" href="#" data-currency="AED">د.إAED</a>
+            <a role="menuitem" href="#" data-currency="CAD">C$CAD</a>
+            <a role="menuitem" href="#" data-currency="AUD">A$AUD</a>
+          </div>
+        </div>
+        <button id="loginBtn" class="util-btn">👤 Log In</button>
+      </div>
+    </div>
+  </div>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-left">
+  <a href="index.html" class="brand" aria-label="M-Mobiles Home">M-Mobiles</a>
+        <button class="menu-toggle" aria-controls="siteNav" aria-expanded="false">☰</button>
+        <nav id="siteNav" class="nav">
+          <a href="index.html" class="nav-link">Home</a>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">Pages <span class="caret">▾</span></button>
+            <div class="dropdown-menu" role="menu">
+              <a role="menuitem" href="about.html">About Us</a>
+              <a role="menuitem" href="#">Track Your Order</a>
+              <a role="menuitem" href="#">Login</a>
+              <a role="menuitem" href="#">Sign-Up</a>
+              <a role="menuitem" href="#">Categories</a>
+              <a role="menuitem" href="#">Coming Soon</a>
+              <a role="menuitem" href="#">Forget Password</a>
+              <a role="menuitem" href="#">My Account</a>
+              <a role="menuitem" href="#">Faq</a>
+              <a role="menuitem" href="404.html">404</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">Shop <span class="caret">▾</span></button>
+            <div class="dropdown-menu" role="menu">
+              <a role="menuitem" href="shop.html?layout=grid">Shop Grid</a>
+              <a role="menuitem" href="shop.html?layout=left">Shop Left Sidebar</a>
+              <a role="menuitem" href="shop.html?layout=right">Shop Right Sidebar</a>
+              <a role="menuitem" href="#" data-open-cart>Shop Cart</a>
+              <a role="menuitem" href="checkout.html">Checkout</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">Blog <span class="caret">▾</span></button>
+            <div class="dropdown-menu" role="menu">
+              <a role="menuitem" href="#">Blog Grid</a>
+              <a role="menuitem" href="#">Blog Single</a>
+            </div>
+          </div>
+          <a href="contact.html" class="nav-link">Contact Us</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <input class="search" type="text" placeholder="Search products...">
+        <button id="cartBtn" class="cart-btn">
+          <span id="cartCount">0</span>
+          <svg width="24" height="24" fill="none" stroke="#222" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h7.72a2 2 0 0 0 2-1.61l1.38-7.39H6"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <section id="productDetail" class="product-detail"></section>
+    </div>
+    <!-- Product info tabs (Description / Additional Information / Reviews) -->
+    <section class="container" id="productTabs" aria-label="Product information tabs">
+      <div class="pd-tabs" role="tablist">
+        <button class="pd-tab active" data-tab="desc" role="tab" aria-selected="true">Description</button>
+        <button class="pd-tab" data-tab="info" role="tab" aria-selected="false">Additional Information</button>
+        <button class="pd-tab" data-tab="reviews" role="tab" aria-selected="false">Reviews</button>
+      </div>
+      <div class="pd-panels">
+        <div class="pd-panel" id="pd-desc" role="tabpanel"></div>
+        <div class="pd-panel" id="pd-info" role="tabpanel" hidden></div>
+        <div class="pd-panel" id="pd-reviews" role="tabpanel" hidden></div>
+      </div>
+    </section>
+    <!-- Related products -->
+    <section class="container" id="relatedSection" aria-label="Related products">
+      <h2 class="related-title">Related Products</h2>
+      <div id="relatedGrid" class="related-grid"></div>
+      <!-- Template reusing fm-card markup for visual parity -->
+      <template id="relCardTemplate">
+        <article class="fm-card" data-id="" tabindex="0">
+          <a class="fm-media" href="#" aria-label="View product"><img alt="" loading="lazy"><span class="fm-badge fm-badge-offer" hidden>Offer</span></a>
+          <div class="fm-info">
+            <h3 class="fm-name"><a href="#"></a></h3>
+            <p class="fm-brand" aria-label="Brand"></p>
+            <div class="fm-price" aria-label="Price">
+              <span class="fm-price-old" hidden></span>
+              <span class="fm-price-new"></span>
+            </div>
+            <div class="fm-actions">
+              <button type="button" class="fm-btn fm-view" data-action="view">View</button>
+              <button type="button" class="fm-btn fm-add" data-action="add">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div class="footer-col">
+          <div class="footer-brand">M-Mobiles</div>
+          <p>© 2025 M-Mobiles. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?layout=grid&amp;cat=mobile">Mobiles</a></li>
+            <li><a href="shop.html?layout=grid&amp;cat=airbuds">Airbuds</a></li>
+            <li><a href="shop.html?layout=grid&amp;cat=charger">Chargers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Twitter"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 8v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div id="overlay" class="overlay hidden"></div>
+  <aside id="cartPanel" class="cart-panel" aria-hidden="true">
+    <button id="closeCart" class="close-cart">×</button>
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total">Total: $<span id="cartTotal">0.00</span></div>
+    <a href="checkout.html" class="checkout-btn">Checkout</a>
+  </aside>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js"></script>
+</body>
+</html>

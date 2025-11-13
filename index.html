@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M-Mobiles - Electronics Store</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <!-- Inline fallback styles ONLY for Featured Mobiles (if main CSS fails to apply) -->
+  <style id="fm-inline-fallback">
+    #featured-mobiles.featured-mobiles{margin:60px auto;background:#fff;border:1px solid #e5e7eb;border-radius:24px;padding:22px 24px;box-shadow:0 8px 30px -12px rgba(0,0,0,0.12)}
+    .fm-header{display:flex;flex-wrap:wrap;align-items:center;gap:22px;justify-content:space-between;margin-bottom:26px}
+    .fm-title{margin:0;font-size:2.1rem;font-weight:900;letter-spacing:.5px;background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative;padding-bottom:6px}
+    .fm-title::after{content:"";position:absolute;left:0;bottom:0;width:70px;height:4px;background:linear-gradient(90deg,#7c3aed,#a78bfa);border-radius:3px}
+    .fm-filters{display:inline-flex;background:#f3f0ff;padding:6px;border-radius:50px;position:relative;gap:4px;box-shadow:0 4px 14px rgba(124,58,237,0.15)}
+    .fm-filter{border:0;background:transparent;font-weight:800;font-size:.82rem;padding:10px 20px;border-radius:40px;cursor:pointer;color:#6b7280;transition:.3s}
+    .fm-filter.is-active{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.35);transform:translateY(-2px)}
+    .fm-filter:not(.is-active):hover{color:#7c3aed;background:rgba(124,58,237,0.08)}
+    .fm-row{position:relative;display:flex;align-items:center;gap:10px}
+    .fm-nav{background:#fff;border:1px solid #e2e8f0;color:#374151;width:38px;height:38px;border-radius:10px;font-weight:900;box-shadow:0 2px 8px rgba(0,0,0,.08);cursor:pointer;transition:.25s}
+    .fm-nav:hover{border-color:#7c3aed;color:#7c3aed;transform:translateY(-2px)}
+    .fm-nav:disabled{opacity:.4;cursor:default;transform:none;border-color:#e5e7eb;color:#9ca3af}
+    .fm-grid{display:flex;flex-wrap:nowrap;gap:18px;overflow-x:auto;overflow-y:hidden;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+    .fm-grid::-webkit-scrollbar{height:10px}
+    .fm-grid::-webkit-scrollbar-track{background:#f3f4f6;border-radius:999px}
+    .fm-grid::-webkit-scrollbar-thumb{background:linear-gradient(135deg,#7c3aed,#a78bfa);border-radius:999px}
+    .fm-card{background:#fff;border:1px solid #eef2f7;border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.06);display:flex;flex-direction:column;overflow:hidden;position:relative;transition:.45s;min-width:260px;max-width:280px;flex:0 0 260px;scroll-snap-align:start}
+    .fm-card:hover{transform:translateY(-6px);box-shadow:0 14px 40px -10px rgba(124,58,237,.28);border-color:rgba(124,58,237,.35)}
+    .fm-media{position:relative;display:block;background:#f8fafc;aspect-ratio:1/1;overflow:hidden;min-height:220px}
+    .fm-media img{width:100%;height:100%;object-fit:contain;padding:26px;transition:transform .5s}
+    .fm-card:hover .fm-media img{transform:scale(1.06)}
+    .fm-badge{position:absolute;top:10px;left:10px;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:999px;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;box-shadow:0 2px 6px rgba(124,58,237,.35)}
+    .fm-info{padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .fm-name{margin:0;font-size:1.05rem;font-weight:800;letter-spacing:.3px;text-align:left}
+    .fm-name a{color:#1e293b !important;text-decoration:none !important}
+    .fm-name a:hover{color:#7c3aed}
+    .fm-brand{margin:0;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#94a3b8}
+    .fm-price{display:flex;align-items:center;gap:10px;font-weight:800}
+    .fm-price-old{color:#94a3b8;text-decoration:line-through;font-size:.85rem;font-weight:700}
+    .fm-price-new{font-size:1.2rem;font-weight:800;background:linear-gradient(90deg,#7c3aed,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .fm-actions{margin-top:auto;display:flex;gap:10px}
+    .fm-btn{flex:1;font-size:.75rem;letter-spacing:.08em;font-weight:800;text-transform:uppercase;padding:12px 14px;border-radius:14px;cursor:pointer;border:1px solid #e2e8f0;background:#fff;color:#475569;transition:.35s}
+    .fm-btn.fm-add{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;border:0;box-shadow:0 4px 12px -2px rgba(124,58,237,.45)}
+    .fm-btn.fm-add:hover{filter:brightness(1.07);box-shadow:0 8px 24px -4px rgba(124,58,237,.5);transform:translateY(-3px)}
+    .fm-btn.fm-view:hover{background:#f1f5f9;transform:translateY(-3px)}
+    @media (max-width:780px){.fm-header{flex-direction:column;align-items:flex-start}.fm-title{font-size:1.8rem}.fm-grid{gap:16px}}
+    @media (max-width:560px){.fm-filters{width:100%;justify-content:space-between}.fm-filter{flex:1;text-align:center;padding:12px 10px}.fm-title{font-size:1.6rem}}
+  </style>
+</head>
+<body class="has-topbar home">
+  <!-- Top promo bar (Envato-like) -->
+  <div class="market-bar" role="banner">
+    <div class="container market-flex">
+      <div class="market-left"><span class="leaf" aria-hidden="true"></span> <strong>M-Mobiles</strong></div>
+  <a class="market-cta" href="shop.html?layout=grid">Buy now</a>
+    </div>
+  </div>
+  <!-- Utility bar between top bar and nav -->
+  <div class="utility-bar" role="region" aria-label="Site utilities">
+    <div class="container util-flex">
+      <div class="util-left">
+        <span class="util-item">📣 <strong>7500k</strong> Followers</span>
+        <span class="util-sep"></span>
+        <span class="util-item phone-item">📞 +402 763 282 46</span>
+      </div>
+      <div class="util-right">
+        <button id="themeToggle" class="util-btn theme-toggle" aria-pressed="false" title="Toggle theme">🌙 Dark</button>
+        <div class="dropdown util-dd">
+          <button class="util-btn dropdown-toggle" id="langToggle" aria-expanded="false"><span class="current-language">English</span> <span class="caret">▾</span></button>
+          <div class="dropdown-menu" role="menu" aria-labelledby="langToggle">
+            <a role="menuitem" href="#" data-lang="English">English</a>
+            <a role="menuitem" href="#" data-lang="Urdu">Urdu</a>
+            <a role="menuitem" href="#" data-lang="Arabic">Arabic</a>
+            <a role="menuitem" href="#" data-lang="Spanish">Spanish</a>
+            <a role="menuitem" href="#" data-lang="French">French</a>
+            <a role="menuitem" href="#" data-lang="German">German</a>
+            <a role="menuitem" href="#" data-lang="Chinese">Chinese</a>
+            <a role="menuitem" href="#" data-lang="Japanese">Japanese</a>
+          </div>
+        </div>
+        <div class="dropdown util-dd">
+          <button class="util-btn dropdown-toggle" id="curToggle" aria-expanded="false"><span class="current-currency">$USD</span> <span class="caret">▾</span></button>
+          <div class="dropdown-menu" role="menu" aria-labelledby="curToggle">
+            <a role="menuitem" href="#" data-currency="USD">$USD</a>
+            <a role="menuitem" href="#" data-currency="EUR">€EUR</a>
+            <a role="menuitem" href="#" data-currency="GBP">£GBP</a>
+            <a role="menuitem" href="#" data-currency="PKR">₨PKR</a>
+            <a role="menuitem" href="#" data-currency="INR">₹INR</a>
+            <a role="menuitem" href="#" data-currency="JPY">¥JPY</a>
+            <a role="menuitem" href="#" data-currency="CNY">¥CNY</a>
+            <a role="menuitem" href="#" data-currency="AED">د.إAED</a>
+            <a role="menuitem" href="#" data-currency="CAD">C$CAD</a>
+            <a role="menuitem" href="#" data-currency="AUD">A$AUD</a>
+          </div>
+        </div>
+        <button id="loginBtn" class="util-btn">👤 Log In</button>
+      </div>
+    </div>
+  </div>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-left">
+        <a href="index.html" class="brand" aria-label="M-Mobiles Home">M-Mobiles</a>
+        <button class="menu-toggle" aria-controls="siteNav" aria-expanded="false">☰</button>
+        <nav id="siteNav" class="nav">
+          <a href="index.html" class="nav-link active">Home</a>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">Pages <span class="caret">▾</span></button>
+            <div class="dropdown-menu" role="menu">
+              <a role="menuitem" href="about.html">About Us</a>
+              <a role="menuitem" href="#">Track Your Order</a>
+              <a role="menuitem" href="#">Login</a>
+              <a role="menuitem" href="#">Sign-Up</a>
+              <a role="menuitem" href="#">Categories</a>
+              <a role="menuitem" href="#">Coming Soon</a>
+              <a role="menuitem" href="#">Forget Password</a>
+              <a role="menuitem" href="#">My Account</a>
+              <a role="menuitem" href="#">Faq</a>
+              <a role="menuitem" href="404.html">404</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">Shop <span class="caret">▾</span></button>
+            <div class="dropdown-menu" role="menu">
+              <a role="menuitem" href="shop.html?layout=grid">Shop Grid</a>
+              <a role="menuitem" href="shop.html?layout=left">Shop Left Sidebar</a>
+              <a role="menuitem" href="shop.html?layout=right">Shop Right Sidebar</a>
+              <a role="menuitem" href="#" data-open-cart>Shop Cart</a>
+              <a role="menuitem" href="checkout.html">Checkout</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="nav-link dropdown-toggle" type="button" aria-expanded="false">Blog <span class="caret">▾</span></button>
+            <div class="dropdown-menu" role="menu">
+              <a role="menuitem" href="#">Blog Grid</a>
+              <a role="menuitem" href="#">Blog Single</a>
+            </div>
+          </div>
+          <a href="contact.html" class="nav-link">Contact Us</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <input class="search" type="text" placeholder="Search products...">
+        <button id="cartBtn" class="cart-btn">
+          <span id="cartCount">0</span>
+          <svg width="24" height="24" fill="none" stroke="#222" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h7.72a2 2 0 0 0 2-1.61l1.38-7.39H6"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <!-- Top Orange Hero like reference -->
+  <section class="hero M-mobiles-orange animated-hero upgraded-hero full-bleed" aria-labelledby="heroHeading">
+    <div class="container hero-grid"> 
+      <div class="hero-main">
+        <span class="hero-badge reveal-up" style="--delay:0s">Mega Sale • Up to 45% Off</span>
+        <h1 id="heroHeading" class="reveal-up hero-headline">Discover <span class="hero-rotate" aria-live="polite"><span class="hero-word active">Customizable</span><span class="hero-word">Affordable</span><span class="hero-word">Premium</span></span><br>Phones & Accessories</h1>
+        <p class="reveal-up hero-sub" style="--delay:0.05s">Build your perfect setup with top brands, fast delivery and solid support.</p>
+        <ul class="hero-feature-list reveal-up" style="--delay:.1s">
+          <li>✔ Trusted global brands</li>
+          <li>✔ Secure payments</li>
+          <li>✔ 30‑day returns</li>
+          <li>✔ Warranty support</li>
+        </ul>
+        <div class="reveal-up hero-cta-row" style="--delay:0.15s">
+          <a href="shop.html?layout=grid" class="hero-btn">Shop Now</a>
+          <a href="#benefits" class="cta-ghost"><span>Explore benefits</span></a>
+        </div>
+        <div class="hero-stats reveal-up" style="--delay:.22s">
+          <div class="hero-stat"><strong>25k+</strong><span>Customers</span></div>
+          <div class="hero-stat"><strong>98</strong><span>Countries</span></div>
+          <div class="hero-stat"><strong>4.9★</strong><span>Average Rating</span></div>
+        </div>
+      </div>
+      <div class="hero-media reveal-right" style="--delay:0.05s">
+        <div class="hero-img">
+          <img src="assets/featured-image.jfif" alt="Featured flagship phone" />
+          <a class="play-badge" href="https://youtu.be/CNqPPzpbTTg?si=7SIAhWpnLg9_ND9J" target="_blank" rel="noopener" aria-label="Play our story"></a>
+          <div class="play-ring" aria-hidden="true">
+            <svg viewBox="0 0 100 100">
+              <defs>
+                <path id="circlePath" d="M50,50 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
+              </defs>
+              <text dy="5" textLength="280">
+                <textPath xlink:href="#circlePath" startOffset="0%"> WATCH OUR STORY • WATCH OUR STORY • </textPath>
+              </text>
+            </svg>
+          </div>
+        </div>
+        <div class="hero-side-cards">
+          <article class="hero-highlight reveal-up" style="--delay:.18s">
+            <h3>Latest Flagships</h3>
+            <p>Explore cutting‑edge performance and design.</p>
+            <a href="shop.html?layout=grid&amp;cat=mobile" class="mini-link">Browse →</a>
+          </article>
+          <article class="hero-highlight reveal-up" style="--delay:.25s">
+            <h3>Pro Audio Gear</h3>
+            <p>Immersive sound with next‑gen earbuds.</p>
+            <a href="shop.html?layout=grid&amp;cat=airbuds" class="mini-link">Shop →</a>
+          </article>
+          <article class="hero-highlight reveal-up" style="--delay:.32s">
+            <h3>Fast Charging</h3>
+            <p>Reliable chargers for every device.</p>
+            <a href="shop.html?layout=grid&amp;cat=charger" class="mini-link">View →</a>
+          </article>
+        </div>
+      </div>
+      <div class="hero-decor" aria-hidden="true">
+        <span class="dot d1"></span>
+        <span class="dot d2"></span>
+        <span class="ring r1"></span>
+      </div>
+    </div>
+  </section>
+  <!-- Mosaic hero like the reference -->
+  <section class="mosaic">
+    <div class="container mosaic-grid">
+      <a class="tile small reveal-up" href="shop.html?layout=grid&amp;cat=mobile">
+  <img src="assets/featured-image.jfif" alt="Accent Phones" />
+        <div class="tile-info">
+          <span class="eyebrow">Just In</span>
+          <h3>Accent Phones</h3>
+          <span class="link">Shop Now →</span>
+        </div>
+      </a>
+      <a class="tile small reveal-up" style="--delay:.05s" href="shop.html?layout=grid&amp;cat=airbuds">
+        <img src="airbuds.jfif" alt="Luxury Airbuds" />
+        <div class="tile-info">
+          <span class="eyebrow">New Collection</span>
+          <h3>Luxury Airbuds</h3>
+          <span class="link">Shop Now →</span>
+        </div>
+      </a>
+      <a class="tile large reveal-right" href="shop.html?layout=grid&amp;cat=mobile" style="--delay:.1s">
+        <img src="mobiles.jfif" alt="Latest Flagships" />
+        <div class="tile-info">
+          <span class="eyebrow">Interior Tech</span>
+          <h3>Latest Flagship<br>Mobiles</h3>
+          <span class="link">Explore →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+  <!-- Category spotlight cards -->
+  <section class="container" aria-label="Spotlight categories">
+    <div class="spotlight">
+      <a href="shop.html?layout=grid&amp;cat=mobile" class="spot-card reveal-up" style="--delay:.05s">
+        <span class="spot-icon" aria-hidden="true">📱</span>
+        <h3>Flagship Phones</h3>
+        <p>Experience elite performance & design innovation.</p>
+        <span class="spot-cta">Shop Mobiles</span>
+      </a>
+      <a href="shop.html?layout=grid&amp;cat=airbuds" class="spot-card reveal-up" style="--delay:.1s">
+        <span class="spot-icon" aria-hidden="true">🎧</span>
+        <h3>Immersive Audio</h3>
+        <p>Premium clarity and noise cancellation tech.</p>
+        <span class="spot-cta">Shop Airbuds</span>
+      </a>
+      <a href="shop.html?layout=grid&amp;cat=charger" class="spot-card reveal-up" style="--delay:.15s">
+        <span class="spot-icon" aria-hidden="true">⚡</span>
+        <h3>Ultra Fast Charging</h3>
+        <p>Reliable power solutions for every device.</p>
+        <span class="spot-cta">Shop Chargers</span>
+      </a>
+    </div>
+  </section>
+  <!-- Main Content -->
+  <main>
+    <div class="container" id="benefits">
+      <section class="benefits reveal-up">
+        <div class="benefit">
+          <div class="icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M3 7h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>
+          </div>
+          <div>
+            <h4>Free & fast delivery</h4>
+            <p>On all orders over $50</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M3 12l2-2 4 4L19 6l2 2-12 12-6-6z"/></svg>
+          </div>
+          <div>
+            <h4>Easy returns</h4>
+            <p>30-day hassle-free</p>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M22 12a10 10 0 1 1-10-10"/><path d="M22 4v8h-6"/></svg>
+          </div>
+          <div>
+            <h4>Support 24/7</h4>
+            <p>We’re always here to help</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- About Us (overlapping photos) -->
+    <section class="container" aria-label="About M-Mobiles">
+      <div class="about-mini reveal-up">
+        <div class="about-copy">
+          <span class="badge">About Us</span>
+          <h2>Quality tech, made simple</h2>
+          <p>At M‑Mobiles, we curate flagship phones, immersive audio, and fast‑charging gear from trusted brands—backed by fast delivery, secure payments, and friendly support.</p>
+          <ul class="about-points">
+            <li>Trusted global brands</li>
+            <li>Secure payments</li>
+            <li>Fast delivery & easy returns</li>
+          </ul>
+          <div class="about-metrics">
+            <span class="metric"><strong>25k+</strong> Customers</span>
+            <span class="metric"><strong>98</strong> Countries</span>
+            <span class="metric"><strong>4.9★</strong> Rating</span>
+          </div>
+          <p>We believe great tech should be easy to choose and a joy to use. Explore our latest arrivals or reach out any time.</p>
+          <a href="about.html" class="hero-btn">Learn more</a>
+        </div>
+        <div class="about-photos">
+          <img src="aboutus.jfif" alt="Our team at work" class="shot-a top">
+          <img src="aboutus2.jfif" alt="Showroom devices" class="shot-b">
+        </div>
+      </div>
+    </section>
+    <!-- Choose Category slider (emoji-based) -->
+    <section class="container reveal-up" aria-label="Choose your category">
+      <div class="cat-slider static">
+        <div class="cs-track">
+          <a class="cs-item" href="shop.html?layout=grid&amp;cat=mobile" aria-label="Shop Mobiles">
+            <span class="cs-emoji" aria-hidden="true">📱</span>
+            <div class="cs-text">
+              <span class="cs-eyebrow">Browse</span>
+              <strong class="cs-title">Mobiles</strong>
+            </div>
+          </a>
+          <a class="cs-item" href="shop.html?layout=grid&amp;cat=airbuds" aria-label="Shop Airbuds">
+            <span class="cs-emoji" aria-hidden="true">🎧</span>
+            <div class="cs-text">
+              <span class="cs-eyebrow">Listen</span>
+              <strong class="cs-title">Airbuds</strong>
+            </div>
+          </a>
+          <a class="cs-item" href="shop.html?layout=grid&amp;cat=charger" aria-label="Shop Chargers">
+            <span class="cs-emoji" aria-hidden="true">⚡</span>
+            <div class="cs-text">
+              <span class="cs-eyebrow">Power</span>
+              <strong class="cs-title">Chargers</strong>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- Featured Mobiles (refactored modular section) -->
+    <section id="featured-mobiles" class="container featured-mobiles" aria-labelledby="featuredMobilesTitle">
+      <header class="fm-header">
+        <h2 id="featuredMobilesTitle" class="fm-title">Featured Mobiles</h2>
+        <div class="fm-filters" role="tablist" aria-label="Featured mobile filters">
+          <button class="fm-filter is-active" data-filter="popular" role="tab" aria-selected="true">⭐ Popular</button>
+          <button class="fm-filter" data-filter="selling" role="tab" aria-selected="false">🔥 Best Selling</button>
+          <button class="fm-filter" data-filter="offer" role="tab" aria-selected="false">💰 Offers</button>
+        </div>
+      </header>
+      <div class="fm-row">
+        <button class="fm-nav fm-prev" aria-label="Scroll left" type="button">‹</button>
+        <div id="featuredMobilesGrid" class="fm-grid" data-current="popular" aria-live="polite" style="display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:18px;scroll-snap-type:x mandatory;">
+          <!-- Cards injected by JS; template below provides structure -->
+        </div>
+        <button class="fm-nav fm-next" aria-label="Scroll right" type="button">›</button>
+      </div>
+      <template id="fmCardTemplate">
+        <article class="fm-card" data-id="" tabindex="0">
+          <a class="fm-media" href="#" aria-label="View product"><img alt="" loading="lazy"><span class="fm-badge fm-badge-offer" hidden>Offer</span></a>
+          <div class="fm-info">
+            <h3 class="fm-name"><a href="#"></a></h3>
+            <p class="fm-brand" aria-label="Brand"></p>
+            <div class="fm-price" aria-label="Price">
+              <span class="fm-price-old" hidden></span>
+              <span class="fm-price-new"></span>
+            </div>
+            <div class="fm-actions">
+              <button type="button" class="fm-btn fm-view" data-action="view">View</button>
+              <button type="button" class="fm-btn fm-add" data-action="add">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </section>
+    <!-- Editorial block like 'Limited Edition' -->
+    <div class="container">
+      <section class="collab">
+        <div class="collab-media">
+          <img src="crafting.jfif" alt="Crafting Devices" />
+        </div>
+        <div class="collab-text">
+          <span class="eyebrow">New Collection</span>
+          <h2>Crafting Devices</h2>
+          <p>Thoughtfully designed phones and accessories with precision craftsmanship. Discover pieces that look as good as they perform.</p>
+          <a href="shop.html?layout=grid&amp;cat=mobile" class="hero-btn">Explore Mobiles</a>
+        </div>
+      </section>
+    </div>
+  <!-- Newsletter CTA -->
+    <div class="container">
+      <section class="newsletter reveal-up" aria-label="Subscribe to updates">
+        <div class="nl-text">
+          <h3>Get updates and special offers</h3>
+          <p>Join our newsletter and be the first to know about deals.</p>
+        </div>
+        <form class="nl-form" id="newsletterForm">
+          <input type="email" required placeholder="Enter your email" />
+          <button class="hero-btn" type="submit">Subscribe</button>
+        </form>
+      </section>
+    </div>
+  </main>
+  <!-- Extended landing sections -->
+  <section class="container" aria-label="Shop by category tabs">
+    <div class="tabs-section reveal-up">
+      <div class="tabs" role="tablist">
+        <button class="tab active" role="tab" aria-selected="true" data-cat="mobile">Mobiles</button>
+        <button class="tab" role="tab" aria-selected="false" data-cat="airbuds">Airbuds</button>
+        <button class="tab" role="tab" aria-selected="false" data-cat="charger">Chargers</button>
+      </div>
+      <div id="tabGrid" class="fm-grid" aria-live="polite" style="display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:18px;scroll-snap-type:x mandatory;"></div>
+      <!-- Template for category tabs cards using Featured-style markup -->
+      <template id="catCardTemplate">
+        <article class="fm-card" data-id="" tabindex="0">
+          <a class="fm-media" href="#" aria-label="View product"><img alt="" loading="lazy"><span class="fm-badge fm-badge-offer" hidden>Offer</span></a>
+          <div class="fm-info">
+            <h3 class="fm-name"><a href="#"></a></h3>
+            <p class="fm-brand" aria-label="Brand"></p>
+            <div class="fm-price" aria-label="Price">
+              <span class="fm-price-old" hidden></span>
+              <span class="fm-price-new"></span>
+            </div>
+            <div class="fm-actions">
+              <button type="button" class="fm-btn fm-view" data-action="view">View</button>
+              <button type="button" class="fm-btn fm-add" data-action="add">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Shop stats">
+    <div class="stats reveal-up">
+      <div class="stat-card">
+        <div class="stat-number" data-count="25000">0</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="1200">0</div>
+        <div class="stat-label">Products</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="98">0</div>
+        <div class="stat-label">Countries Shipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-count="4.9">0</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Customer testimonials">
+    <div class="testimonials reveal-up">
+      <button class="t-nav t-prev" aria-label="Previous">‹</button>
+      <div class="t-viewport">
+        <div class="t-track">
+          <div class="t-item">
+            <p>“Super fast delivery and the phone is amazing. Exactly as described!”</p>
+            <div class="t-author">— Ayesha, Karachi</div>
+          </div>
+          <div class="t-item">
+            <p>“Great support and easy returns. My go-to tech store now.”</p>
+            <div class="t-author">— Omar, Dubai</div>
+          </div>
+          <div class="t-item">
+            <p>“Fantastic prices and top-notch quality. Highly recommended.”</p>
+            <div class="t-author">— Sara, Lahore</div>
+          </div>
+        </div>
+      </div>
+      <button class="t-nav t-next" aria-label="Next">›</button>
+    </div>
+  </section>
+
+  <section class="container" aria-label="Frequently asked questions">
+    <div class="faq reveal-up">
+      <details>
+        <summary>What is your return policy?</summary>
+        <p>We offer hassle-free returns within 30 days of delivery. Items must be in original condition.</p>
+      </details>
+      <details>
+        <summary>Do you ship internationally?</summary>
+        <p>Yes, we ship to 98+ countries with reliable tracked delivery options.</p>
+      </details>
+      <details>
+        <summary>How long does delivery take?</summary>
+        <p>Most orders arrive within 3–7 business days depending on your location and shipping method.</p>
+      </details>
+      <details>
+        <summary>Which payment methods are accepted?</summary>
+        <p>We accept major cards, bank transfers, and popular wallets in supported regions.</p>
+      </details>
+    </div>
+  </section>
+  <!-- Product image slider (auto-scrolling, hover-controlled) -->
+  <section class="container-full reveal-up full-bleed" aria-label="Product showcase slider">
+    <div class="product-slider" role="list" aria-label="Scrolling product images">
+      <div class="ps-hover-zone left" aria-hidden="true"></div>
+      <div class="ps-hover-zone right" aria-hidden="true"></div>
+      <div class="ps-edge" aria-hidden="true"></div>
+      <div class="ps-edge ps-right" aria-hidden="true"></div>
+      <div class="ps-track">
+        <!-- Mobiles -->
+  <div class="ps-item" role="listitem"><img src="mobile/p1.jfif" alt="Galaxy A55"></div>
+  <div class="ps-item" role="listitem"><img src="mobile/p2.jfif" alt="iPhone 14"></div>
+  <div class="ps-item" role="listitem"><img src="mobile/p3.jfif" alt="Redmi Note 13"></div>
+  <div class="ps-item" role="listitem"><img src="mobile/p4.jfif" alt="OnePlus 12"></div>
+  <div class="ps-item" role="listitem"><img src="mobile/p5.jfif" alt="Pixel 8"></div>
+  <!-- Airbuds -->
+  <div class="ps-item" role="listitem"><img src="airbuds/a1.jfif" alt="Galaxy Buds"></div>
+  <div class="ps-item" role="listitem"><img src="airbuds/a2.jfif" alt="AirPods Pro"></div>
+  <div class="ps-item" role="listitem"><img src="airbuds/a3.jfif" alt="Redmi AirDots"></div>
+  <div class="ps-item" role="listitem"><img src="airbuds/a4.jfif" alt="OnePlus Buds Z2"></div>
+  <div class="ps-item" role="listitem"><img src="airbuds/a5.jfif" alt="Boat Airdopes"></div>
+  <!-- Chargers -->
+  <div class="ps-item" role="listitem"><img src="charger/c1.jfif" alt="Samsung Charger"></div>
+  <div class="ps-item" role="listitem"><img src="charger/c2.jfif" alt="Apple Fast Charger"></div>
+  <div class="ps-item" role="listitem"><img src="charger/c3.jfif" alt="Mi Charger"></div>
+  <div class="ps-item" role="listitem"><img src="charger/c4.jfif" alt="Anker Charger"></div>
+  <div class="ps-item" role="listitem"><img src="charger/c5.jfif" alt="Baseus Charger"></div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div class="footer-col">
+          <div class="footer-brand">M-Mobiles</div>
+          <p>© 2025 M-Mobiles. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?layout=grid&amp;cat=mobile">Mobiles</a></li>
+            <li><a href="shop.html?layout=grid&amp;cat=airbuds">Airbuds</a></li>
+            <li><a href="shop.html?layout=grid&amp;cat=charger">Chargers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Twitter"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 8v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Cart Panel -->
+  <div id="overlay" class="overlay hidden"></div>
+  <aside id="cartPanel" class="cart-panel" aria-hidden="true">
+    <button id="closeCart" class="close-cart">×</button>
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+  <div class="cart-total">Total: <span id="cartTotal">0.00</span></div>
+    <a href="checkout.html" class="checkout-btn">Checkout</a>
+  </aside>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js"></script>
+</body>
+</html>
